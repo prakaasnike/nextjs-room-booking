@@ -20,6 +20,32 @@ class APIFeatures {
         // Return this object so that other methods can be chained
         return this;
     }
+
+    // Filter method to perform advanced filtering with gt, gte, etc.
+    filter() {
+        const { queryStr } = this; // Destructure the query string from the APIFeatures object
+        const filterFields = ['category']; // Specify the fields that can be filtered
+        const filterQuery = {}; // Initialize an empty object to store the filter query
+
+        // Loop through each key-value pair in the query string
+        Object.entries(queryStr).forEach(([key, value]) => {
+            // Check if the key is one of the allowed filter fields
+            if (filterFields.includes(key)) {
+                // If so, add the filter query to the object
+                filterQuery[key] = value;
+            }
+        });
+
+        // Apply the filter query to the MongoDB query
+        this.query = this.query.find(filterQuery);
+        return this;
+    }
+
+
+
+
+
+
 }
 
 // Export the APIFeatures class

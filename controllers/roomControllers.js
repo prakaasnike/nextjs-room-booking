@@ -7,6 +7,7 @@ const allRooms = catchAsyncErrors(async (req, res) => {
 
     const apiFeatures = new APIFeatures(Room.find(), req.query)
         .search()
+        .filter()
 
     // const rooms = await Room.find()
     let rooms = await apiFeatures.query;
