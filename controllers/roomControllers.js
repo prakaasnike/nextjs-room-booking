@@ -4,20 +4,26 @@ import catchAsyncErrors from '../middlewares/catchAsyncError'
 import APIFeatures from '../utils/apiFeatures'
 // Create all rooms   =>   /api/rooms
 const allRooms = catchAsyncErrors(async (req, res) => {
+    const resPerPage = 4;
+    const roomsCount = await Room.countDocuments();
 
+    // Pass the Room.find() result to the APIFeatures constructor
     const apiFeatures = new APIFeatures(Room.find(), req.query)
         .search()
         .filter()
+        .pagination(resPerPage);
 
-    // const rooms = await Room.find()
     let rooms = await apiFeatures.query;
+    const filteredRoomsCount = await Room.countDocuments(); // Count the filtered rooms u can also add length
+
     res.status(200).json({
         success: true,
-        count: rooms.length,
+        roomsCount,
+        resPerPage,
+        filteredRoomsCount,
         rooms,
-    })
-
-})
+    });
+});
 
 
 // Create new room => /api/rooms

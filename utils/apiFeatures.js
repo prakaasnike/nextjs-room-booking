@@ -42,7 +42,19 @@ class APIFeatures {
     }
 
 
+    pagination(resPerPage) {
+        // Get the current page number from the query string or default to 1
+        const currentPage = Number(this.queryStr.page) || 1;
 
+        // Calculate the number of results to skip based on the page number and results per page
+        const skip = resPerPage * (currentPage - 1);
+
+        // Limit the number of results to the requested number of results per page and skip the calculated number of results
+        this.query = this.query.limit(resPerPage).skip(skip);
+
+        // Return the updated query
+        return this;
+    }
 
 
 
