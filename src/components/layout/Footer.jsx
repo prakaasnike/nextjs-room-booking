@@ -1,8 +1,16 @@
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({ name = "Prakash Nayak" }) => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
     return (
-        <div>Footer</div>
+        <footer className="py-4 text-center bg-white border-t-2 border-gray-100">
+            <p className="text-gray-500 text-sm">
+                © {year} Made with ❤️ by <strong>{name}</strong> | Today is {month} {day}
+            </p>
+        </footer>
     )
 }
 
